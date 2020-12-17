@@ -1,0 +1,18 @@
+Our group is creating a Holiday Greetings web site. Registered users can create online greeting cards, including text, pictures, and video. Then users can send email invitations to friends and family to view the finished cards.
+
+Main features:
+- site provides a variety of pre-defined card templates the user can select from.
+- each card has space for text, image(s), and a video.
+- card templates and finished cards are organized into groups for easy search.
+- visitors can view the finished greetings without having to register or log in.
+
+Implementation:
+- HTML, CSS, JavaScript front end.
+- Python - Django back end.
+- Use of Cloudinary site/API to store images and video.
+
+Team members:
+- Maria Ramirez
+- Gustavo Leon
+- Jesus Garcia
+- Mark Beswetherick
