@@ -29,3 +29,19 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
     
+class Card(models.Model):
+    name = models.CharField(max_length=50, blank=True)
+    creator = models.ForeignKey(User,related_name='cards', on_delete=models.CASCADE)
+    message = models.TextField(blank=True)
+    # images = models.ManyToManyField()
+    # layout = models.ForeignKey() <--Make sure there is a default
+    video = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+    
+class Template(models.Model):
+    pass
+
+
+    
+    

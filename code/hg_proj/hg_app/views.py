@@ -63,3 +63,9 @@ def login(request):
 
     # was not a post request, send user back to home page
     return redirect('/')
+
+
+# Actions
+def logout(request):
+    request.session.flush()
+    return redirect('/')
