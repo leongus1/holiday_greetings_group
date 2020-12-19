@@ -69,3 +69,15 @@ def login(request):
 def logout(request):
     request.session.flush()
     return redirect('/')
+
+def recent(request):
+    return render(request, 'recent.html')
+
+def trending(request):
+    return render(request, 'trending.html')
+     
+def a_z(request):
+    return render(request, 'a_z.html')
+
+def create(request):
+    return render(request, 'create.html')
