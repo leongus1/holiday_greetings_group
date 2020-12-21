@@ -50,9 +50,9 @@ class Card(models.Model):
     name = models.CharField(max_length=50, blank=True)
     creator = models.ForeignKey(User,related_name='cards', on_delete=models.CASCADE)
     message = models.TextField(blank=True)
-    images = models.ManyToManyField(Image, related_name='cards',blank=True, null=True)
-    video = models.ForeignKey(Video, related_name='cards',blank=True, null=True, on_delete=models.CASCADE)
-    template = models.ForeignKey(Template, related_name='cards', on_delete=models.CASCADE)
+    images = models.ManyToManyField(Image, related_name='cards', blank=True, null=True)
+    video = models.ForeignKey(Video, related_name='cards', blank=True, on_delete=models.CASCADE)
+    template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     
