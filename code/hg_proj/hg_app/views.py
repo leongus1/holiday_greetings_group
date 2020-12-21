@@ -5,6 +5,7 @@ from .models import *
 
 # Create your views here.
 
+##PAGE RENDERS
 def index(request):
     return render(request, "index.html")
 
@@ -15,7 +16,21 @@ def home(request):
     if 'user_id' not in request.session:
         return redirect("/")
     return render(request, "home.html")
-    
+
+def recent(request):
+    return render(request, 'recent.html')
+
+def trending(request):
+    return render(request, 'trending.html')
+     
+def a_z(request):
+    return render(request, 'a_z.html')
+
+def create(request):
+    return render(request, 'create.html')
+
+
+##CREATE DATA    
 def register(request):
     if request.method=="POST":
         errors = User.objects.validate(request.POST)
@@ -41,6 +56,8 @@ def register(request):
     # was not a post request, send user back to home page
     return redirect('/')
 
+
+##ACTIONS
 def login(request):
     if request.method == 'POST':
         # see if email is in the DB
@@ -65,19 +82,7 @@ def login(request):
     return redirect('/')
 
 
-# Actions
 def logout(request):
     request.session.flush()
     return redirect('/')
 
-def recent(request):
-    return render(request, 'recent.html')
-
-def trending(request):
-    return render(request, 'trending.html')
-     
-def a_z(request):
-    return render(request, 'a_z.html')
-
-def create(request):
-    return render(request, 'create.html')

@@ -11,7 +11,9 @@
 </head>
 
 <body>
+    
     <div class="topnav" style="display: inline-flex; margin-bottom: 30px;">
+        
         <h1 class="welcome" style="text-decoration: underline; color: red; margin-left: 20px;">
             Welcome {{request.session.user_name}}!</h1>
         <form class="example" action="action_page.php" style="margin-left: 650px;">
@@ -20,6 +22,9 @@
         </form>
         <a href="/logout" style="font-size: 20px; color: red; margin-left: 20px;">Logout</a>
     </div>
+    <audio id="bgMusic" controls volume=0.1 autoplay="true" style="float: right;">
+        <source src="{% static 'rudolph.mp3' %}" type="audio/mpeg" >
+    </audio>
     <a href="/create" style="font-size: 25px; color: red; margin-left: 600px;">Make Your Own Holiday Card</a>
     <div class="recent">
         <h2 style="text-decoration: underline;">Recently Added</h2>
@@ -49,7 +54,7 @@
             <li><i class="fab fa-youtube" style="margin-left: 12px;"></i></li>
         </ul>
     </div>
-    <embed src="{% static 'rudolph.mp3' %}" width="180" height="90" loop="false" autostart="false" hidden="true" />
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>
