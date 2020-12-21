@@ -29,18 +29,34 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
     
+class Template(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Image(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+class Video(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 class Card(models.Model):
     name = models.CharField(max_length=50, blank=True)
     creator = models.ForeignKey(User,related_name='cards', on_delete=models.CASCADE)
     message = models.TextField(blank=True)
-    # images = models.ManyToManyField()
-    # layout = models.ForeignKey() <--Make sure there is a default
-    video = models.CharField(max_length=255, blank=True)
+    images = models.ManyToManyField(Image, related_name='cards',blank=True, null=True)
+    video = models.ForeignKey(Video, related_name='cards',blank=True, null=True, on_delete=models.CASCADE)
+    template = models.ForeignKey(Template, related_name='cards', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     
-class Template(models.Model):
-    pass
+
 
 
     

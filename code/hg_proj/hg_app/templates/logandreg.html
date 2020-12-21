@@ -15,11 +15,15 @@
     <title>Log and Reg</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
 </head>
 
 <body style="background-color: black;">
-    <a href="/" style="color: red; font-size: 20px;">Back Home</a>
-    <h1 style="margin-left: 200px; margin-bottom: -20px; margin-top: 60px; color: red;">Thank you so much for joining us!
+    <audio id="bgMusic" controls volume=0.1 autoplay="true" style="float: right;">
+        <source src="{% static 'jingle.mp3' %}" type="audio/mpeg" >
+    </audio>
+    <a href="/" style="color: red; font-size: 20px; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Back Home</a>
+    <h1 style="margin-left: 200px; margin-bottom: -20px; margin-top: 60px; color: red; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Thank you so much for joining us!
         <br>
         <br>
         We look forward to assist you to achieve your improvement goals!</h1>
@@ -32,7 +36,7 @@
             </div>
         {% endif %}
 
-        <div class='form-box'>
+        <div class='form-box' style="text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">
             <h1>Register:</h1>
             <form action="/create_user" method=POST>
                 {% csrf_token %}
@@ -56,6 +60,7 @@
         </div>
 
     </div>
-    <embed src="{% static 'jingle.mp3' %}" width="180" height="90" loop="false" autostart="false" hidden="true" />
+
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
