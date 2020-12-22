@@ -1,5 +1,6 @@
 from django.db import models
 import re
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -36,13 +37,13 @@ class Template(models.Model):
 
 class Image(models.Model):
     name = models.CharField(max_length=100)
-    url = models.URLField()
+    img = CloudinaryField('img', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
 class Video(models.Model):
     name = models.CharField(max_length=100)
-    url = models.URLField()
+    vid = CloudinaryField('vid', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
