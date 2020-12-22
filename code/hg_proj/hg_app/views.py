@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
 from .models import *
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Create your views here.
 
@@ -18,7 +21,10 @@ def home(request):
     return render(request, "home.html")
 
 def recent(request):
-    return render(request, 'recent.html')
+    context ={
+        'cards': Card.objects.all(),
+    }
+    return render(request, 'recent.html', context)
 
 def trending(request):
     return render(request, 'trending.html')

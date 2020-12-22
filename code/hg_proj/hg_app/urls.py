@@ -8,8 +8,9 @@ urlpatterns = [
     path('login_reg', views.login_reg),
     path('create_user', views.register),
     path('login', views.login),
-    path('recent', views.recent),
-    path('trending', views.trending),
-    path('a-z', views.a_z),
-    path('create', views.create)
+    path('cards/recent', views.recent),
+    path('cards/trending', views.trending),
+    path('cards/a-z', views.a_z),
+    path('create', views.create),
+    path('create/<int:id>', views.image_details),
 ]
