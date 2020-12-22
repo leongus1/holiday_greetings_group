@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Recent</title>
+    {% load static %}
+</head>
+<body>
+    <h1>View All {{page_name}}</h1>
+    {% for card in cards %}
+    <img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{card.img.version}}/{{card.img.public_id}}.{{card.img.format}} " alt="{{card.name}}" style="width: 300px; display: inline-block; margin-right: 30px;">
+    {% endfor %}
+
+</body>
+</html>
