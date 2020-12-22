@@ -1,5 +1,6 @@
 from django.db import models
 import re
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
