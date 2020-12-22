@@ -28,23 +28,24 @@
     <a href="/create" style="font-size: 25px; color: red; margin-left: 600px;">Make Your Own Holiday Card</a>
     <div class="recent">
         <h2 style="text-decoration: underline;">Recently Added</h2>
-        <img src="{% static 'recent1.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px;"/>
-        <img src="{% static 'recent2.jpeg' %}" style="width: 300px; display: inline-block; margin-right: 30px;"/>
-        <img src="{% static 'recent3.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px;"/>
+        {% for recent in recents %}
+        
+        <a href="/create/{{recent.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{recent.img.version}}/{{recent.img.public_id}}.{{recent.img.format}} " alt="{{recent.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"/></a>
+        {% endfor %}
         <a href="cards/recent" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top;">View All Recent</a>
     </div>
     <div class="trending">
         <h2 style="text-decoration: underline;">Trending Now</h2>
-        <img src="{% static 'trending1.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px; height: 212px;"/>
-        <img src="{% static 'trending2.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px; height: 212px;"/>
-        <img src="{% static 'trending3.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px;"/>
+        {% for trend in trending %}
+        <a href="/create/{{trend.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{trend.img.version}}/{{trend.img.public_id}}.{{trend.img.format}} " alt="{{trend.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"/></a>
+        {% endfor %}
         <a href="cards/trending" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top;">View All Trending Now</a>
     </div>
     <div class="allcards">
         <h2 style="text-decoration: underline;">A-Z Cards</h2>
-        <img src="{% static 'all1.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px; height: 212px;"/>
-        <img src="{% static 'all2.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px; height: 212px;"/>
-        <img src="{% static 'all3.jpg' %}" style="width: 300px; display: inline-block; margin-right: 30px; height: 212px;"/>
+        {% for card in all_cards %}
+        <a href="/create/{{card.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{card.img.version}}/{{card.img.public_id}}.{{card.img.format}} " alt="{{card.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"/></a>
+        {% endfor %}
         <a href="cards/a-z" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top;">View All Cards</a>
     </div>
     <div class="fa">

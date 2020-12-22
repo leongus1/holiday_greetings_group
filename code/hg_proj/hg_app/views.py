@@ -18,22 +18,45 @@ def login_reg(request):
 def home(request):
     if 'user_id' not in request.session:
         return redirect("/")
-    return render(request, "home.html")
+    context ={
+        'page_name': "Home",
+        'recents': Image.objects.filter(name__startswith="recent"),
+        'trending': Image.objects.filter(name__startswith="trending"),
+        'all_cards': Image.objects.filter(name__startswith="all")
+    }
+    return render(request, "home.html", context)
 
 def recent(request):
     context ={
-        'cards': Card.objects.all(),
+        'page_name': "Recent",
+        'cards': Image.objects.filter(name__startswith="recent"),
     }
-    return render(request, 'recent.html', context)
+    return render(request, 'base_card.html', context)
 
 def trending(request):
-    return render(request, 'trending.html')
+    context ={
+        'page_name': "Trending",
+        'cards': Image.objects.filter(name__startswith="trending"),
+    }
+    return render(request, 'base_card.html', context)
      
 def a_z(request):
-    return render(request, 'a_z.html')
+    context ={
+        'page_name': "A-Z",
+        'cards': Image.objects.all(),
+    }
+    return render(request, 'base_card.html', context)
 
 def create(request):
     return render(request, 'create.html')
+
+def image_details(request, img_id):
+    context={
+        'card': Image.objects.get(id=img_id),
+        'specific': True,
+        
+    }
+    return render(request, 'create.html', context)
 
 
 ##CREATE DATA    

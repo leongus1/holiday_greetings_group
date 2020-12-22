@@ -41,6 +41,9 @@ class Image(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.name
+    
 class Video(models.Model):
     name = models.CharField(max_length=100)
     vid = CloudinaryField('vid', null=True)
@@ -51,7 +54,7 @@ class Card(models.Model):
     name = models.CharField(max_length=50, blank=True)
     creator = models.ForeignKey(User,related_name='cards', on_delete=models.CASCADE)
     message = models.TextField(blank=True)
-    images = models.ManyToManyField(Image, related_name='cards', blank=True, null=True)
+    images = models.ManyToManyField(Image, related_name='cards', blank=True)
     video = models.ForeignKey(Video, related_name='cards', blank=True, on_delete=models.CASCADE)
     template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

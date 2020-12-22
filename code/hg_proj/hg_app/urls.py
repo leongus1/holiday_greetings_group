@@ -12,5 +12,6 @@ urlpatterns = [
     path('cards/trending', views.trending),
     path('cards/a-z', views.a_z),
     path('create', views.create),
-    path('create/<int:id>', views.image_details),
+    path('logout', views.logout),
+    path('create/<int:img_id>', views.image_details),
 ]
