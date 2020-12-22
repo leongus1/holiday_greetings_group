@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
     'hg_app',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -119,3 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CLOUDINARY = {
+  'cloud_name': 'dnwhdkhgg',  
+  'api_key': '369487966262422',  
+  'api_secret': '6z3fsGGIkWLXJXa7RGH5BEzHHQk',  
+}
