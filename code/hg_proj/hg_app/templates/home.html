@@ -14,7 +14,7 @@
     
     <div class="topnav" style="display: inline-flex; margin-bottom: 30px;">
         
-        <h1 class="welcome" style="text-decoration: underline; color: red; margin-left: 20px;">
+        <h1 class="welcome" style="text-decoration: underline; color: red; margin-left: 20px; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">
             Welcome {{request.session.user_name}}!</h1>
         <form class="example" action="action_page.php" style="margin-left: 650px;">
             <input type="text" placeholder="Search.." name="search">
@@ -25,28 +25,28 @@
     <audio id="bgMusic" controls volume=0.1 autoplay="true" style="float: right;">
         <source src="{% static 'rudolph.mp3' %}" type="audio/mpeg" >
     </audio>
-    <a href="/create" style="font-size: 25px; color: red; margin-left: 600px;">Make Your Own Holiday Card</a>
+    <a href="/create" style="font-size: 25px; color: red; margin-left: 600px; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Make Your Own Holiday Card</a>
     <div class="recent">
-        <h2 style="text-decoration: underline;">Recently Added</h2>
+        <h2 style="text-decoration: underline; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Recently Added</h2>
         {% for recent in recents %}
         
         <a href="/create/{{recent.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{recent.img.version}}/{{recent.img.public_id}}.{{recent.img.format}} " alt="{{recent.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"/></a>
         {% endfor %}
-        <a href="cards/recent" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top;">View All Recent</a>
+        <a href="cards/recent" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">View All Recent</a>
     </div>
     <div class="trending">
-        <h2 style="text-decoration: underline;">Trending Now</h2>
+        <h2 style="text-decoration: underline; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Trending Now</h2>
         {% for trend in trending %}
         <a href="/create/{{trend.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{trend.img.version}}/{{trend.img.public_id}}.{{trend.img.format}} " alt="{{trend.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"/></a>
         {% endfor %}
-        <a href="cards/trending" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top;">View All Trending Now</a>
+        <a href="cards/trending" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">View All Trending Now</a>
     </div>
     <div class="allcards">
-        <h2 style="text-decoration: underline;">A-Z Cards</h2>
+        <h2 style="text-decoration: underline; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">A-Z Cards</h2>
         {% for card in all_cards %}
         <a href="/create/{{card.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{card.img.version}}/{{card.img.public_id}}.{{card.img.format}} " alt="{{card.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"/></a>
         {% endfor %}
-        <a href="cards/a-z" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top;">View All Cards</a>
+        <a href="cards/a-z" style="font-size: 20px; color: red; margin-right: 10px; vertical-align: top; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">View All Cards</a>
     </div>
     <div class="fa">
         <ul>
