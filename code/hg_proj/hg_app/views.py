@@ -58,6 +58,27 @@ def image_details(request, img_id):
     }
     return render(request, 'create.html', context)
 
+def search(request):
+    if request.method=="POST":
+        # get search text
+        stext = request.POST['search']
+        print(f"search text: {stext}")
+
+        # add check for no text or only whitespace, if so, return to page
+ 
+        # search the DB using filter
+        qs = Image.objects.filter(name__icontains=stext)
+        print(f"query set: {qs}")
+        # print(f"1st image name: {qs[0].name}")
+
+        # return the query set, for now
+        context={
+            'image_objs': qs
+        }
+        return render(request, 'search.html', context)
+
+    # not a POST request,  send em back home
+    return redirect('/')
 
 ##CREATE DATA    
 def register(request):
