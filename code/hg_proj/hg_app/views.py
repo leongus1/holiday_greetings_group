@@ -58,6 +58,9 @@ def image_details(request, img_id):
     }
     return render(request, 'create.html', context)
 
+def test(request):
+    return render (request, 'testing_page.html')
+
 
 ##CREATE DATA    
 def register(request):

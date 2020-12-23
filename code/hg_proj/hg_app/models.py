@@ -38,6 +38,7 @@ class Template(models.Model):
 class Image(models.Model):
     name = models.CharField(max_length=100)
     img = CloudinaryField('img', null=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
