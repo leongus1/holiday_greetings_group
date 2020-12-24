@@ -16,7 +16,8 @@
         
         <h1 class="welcome" style="text-decoration: underline; color: red; margin-left: 20px; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">
             Welcome {{request.session.user_name}}!</h1>
-        <form class="example" action="action_page.php" style="margin-left: 650px;">
+        <form class="example" action="/search" method="POST" style="margin-left: 650px;">
+            {% csrf_token %}
             <input type="text" placeholder="Search.." name="search">
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>

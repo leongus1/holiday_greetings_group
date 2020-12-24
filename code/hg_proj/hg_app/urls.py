@@ -14,5 +14,6 @@ urlpatterns = [
     path('create', views.create),
     path('logout', views.logout),
     path('create/<int:img_id>', views.image_details),
+    path('search', views.search)
     path('test', views.test),
 ]
