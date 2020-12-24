@@ -80,6 +80,10 @@ def search(request):
     # not a POST request,  send em back home
     return redirect('/')
 
+def test(request):
+    return render (request, 'testing_page.html')
+
+
 ##CREATE DATA    
 def register(request):
     if request.method=="POST":
