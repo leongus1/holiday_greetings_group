@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
 from .models import *
+from django.db.models import Q
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -27,23 +28,29 @@ def home(request):
     return render(request, "home.html", context)
 
 def recent(request):
+    user = get_user(request)
+    cards = Image.objects.filter(Q(uploaded_by=None, name__startswith="recent") | Q(uploaded_by=user))
     context ={
         'page_name': "Recent",
-        'cards': Image.objects.filter(name__startswith="recent"),
+        'cards': cards,
     }
     return render(request, 'base_card.html', context)
 
 def trending(request):
+    user = get_user(request)
+    cards = Image.objects.filter(Q(uploaded_by=None, name__startswith="trending" )| Q(uploaded_by=user))
     context ={
         'page_name': "Trending",
-        'cards': Image.objects.filter(name__startswith="trending"),
+        'cards': cards,
     }
     return render(request, 'base_card.html', context)
      
 def a_z(request):
+    user = get_user(request)
+    cards = Image.objects.filter(Q(uploaded_by=None) | Q(uploaded_by=user))
     context ={
         'page_name': "A-Z",
-        'cards': Image.objects.all(),
+        'cards': cards,
     }
     return render(request, 'base_card.html', context)
 
