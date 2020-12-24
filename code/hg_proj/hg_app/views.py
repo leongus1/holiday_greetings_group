@@ -88,6 +88,24 @@ def register(request):
     # was not a post request, send user back to home page
     return redirect('/')
 
+def upload_media(request):
+    if request.method == 'POST':
+        this_user = get_user(request)
+        file = request.FILES
+        media = file.get('media')
+        this_media = Image()
+        this_media.img = (f'/media/{this_user.id}/{media}')
+        this_media.uploaded_by = this_user
+        this_media.save()
+        context={
+            'card': this_media,
+            'specific': True,
+        }
+    return render(request, 'create.html', context) 
+        
+        # cloudinary.uploader.upload(f'/media/{this_user.id}/')
+        
+
 
 ##ACTIONS
 def login(request):
@@ -118,3 +136,11 @@ def logout(request):
     request.session.flush()
     return redirect('/')
 
+def get_user(request):
+    return User.objects.get(id=request.session['user_id'])
+
+def confirm_session(request):
+    if 'user_id' in request.session:
+        return redirect('/')
+    return
+    
