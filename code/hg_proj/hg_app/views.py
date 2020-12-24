@@ -81,7 +81,7 @@ def search(request):
     return redirect('/')
 
 def test(request):
-    return render (request, 'testing_page.html')
+    return render (request, 'test2.html')
 
 
 ##CREATE DATA    
@@ -116,14 +116,11 @@ def upload_media(request):
         file = request.FILES
         media = file.get('media')
         this_media = Image()
-        this_media.img = (f'/media/{this_user.id}/{media}')
+        this_media.img = media
+        this_media.name = media.name
         this_media.uploaded_by = this_user
         this_media.save()
-        context={
-            'card': this_media,
-            'specific': True,
-        }
-    return render(request, 'create.html', context) 
+    return redirect(f'/create/{this_media.id}') 
         
         # cloudinary.uploader.upload(f'/media/{this_user.id}/')
         
