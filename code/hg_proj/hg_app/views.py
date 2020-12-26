@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import bcrypt
 from .models import *
+from django.db.models import Q
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -27,23 +28,29 @@ def home(request):
     return render(request, "home.html", context)
 
 def recent(request):
+    user = get_user(request)
+    cards = Image.objects.filter(Q(uploaded_by=None, name__startswith="recent") | Q(uploaded_by=user))
     context ={
         'page_name': "Recent",
-        'cards': Image.objects.filter(name__startswith="recent"),
+        'cards': cards,
     }
     return render(request, 'base_card.html', context)
 
 def trending(request):
+    user = get_user(request)
+    cards = Image.objects.filter(Q(uploaded_by=None, name__startswith="trending" )| Q(uploaded_by=user))
     context ={
         'page_name': "Trending",
-        'cards': Image.objects.filter(name__startswith="trending"),
+        'cards': cards,
     }
     return render(request, 'base_card.html', context)
      
 def a_z(request):
+    user = get_user(request)
+    cards = Image.objects.filter(Q(uploaded_by=None) | Q(uploaded_by=user))
     context ={
         'page_name': "A-Z",
-        'cards': Image.objects.all(),
+        'cards': cards,
     }
     return render(request, 'base_card.html', context)
 
@@ -58,8 +65,30 @@ def image_details(request, img_id):
     }
     return render(request, 'create.html', context)
 
+def search(request):
+    if request.method=="POST":
+        # get search text
+        stext = request.POST['search']
+        print(f"search text: {stext}")
+
+        # add check for no text or only whitespace, if so, return to page
+ 
+        # search the DB using filter
+        qs = Image.objects.filter(name__icontains=stext)
+        print(f"query set: {qs}")
+        # print(f"1st image name: {qs[0].name}")
+
+        # return the query set, for now
+        context={
+            'image_objs': qs
+        }
+        return render(request, 'search.html', context)
+
+    # not a POST request,  send em back home
+    return redirect('/')
+
 def test(request):
-    return render (request, 'testing_page.html')
+    return render (request, 'test2.html')
 
 
 ##CREATE DATA    
@@ -87,6 +116,21 @@ def register(request):
 
     # was not a post request, send user back to home page
     return redirect('/')
+
+def upload_media(request):
+    if request.method == 'POST':
+        this_user = get_user(request)
+        file = request.FILES
+        media = file.get('media')
+        this_media = Image()
+        this_media.img = media
+        this_media.name = media.name
+        this_media.uploaded_by = this_user
+        this_media.save()
+    return redirect(f'/create/{this_media.id}') 
+        
+        # cloudinary.uploader.upload(f'/media/{this_user.id}/')
+        
 
 
 ##ACTIONS
@@ -118,3 +162,11 @@ def logout(request):
     request.session.flush()
     return redirect('/')
 
+def get_user(request):
+    return User.objects.get(id=request.session['user_id'])
+
+def confirm_session(request):
+    if 'user_id' in request.session:
+        return redirect('/')
+    return
+    

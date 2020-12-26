@@ -20,41 +20,19 @@
       <img style="width: 400px; margin-left: 500px;" src="{% static 'recent1.jpg' %}" id="img-preview"/>
       {% endif %}
       <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: 0px; margin-bottom: 0px; border: 2px solid red;">Or you can upload your image</h2>
-
-      
-
-      
-        <form action="/upload" runat="server" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          <label class="file-upload-container" for="file-upload">
-          <input id="file-upload" type="file" style="display:none;" name="media">
-          Select Your Image
-        </label>
-          <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: 0px; margin-bottom: 0px; border: 2px solid red;">
-          Greeting Here:</h2>
-          <textarea cols="47" rows="10" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px;"></textarea>
+      <label class="file-upload-container" for="file-upload">
+        <input id="file-upload" type="file" style="display:none;">
+        Select Your Image
+      </label>
+      <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: 0px; margin-bottom: 0px; border: 2px solid red;">
+        Greeting Here:</h2>
+        <form action="/review">
+            <textarea cols="47" rows="10" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px;"></textarea>
             <button type="submit" style="margin-left: 550px; margin-top: 10px;">Review Your Card</button>
         </form>
     </div>
     <div id="success"></div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-      function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function(e) {
-            $('#img-preview').attr('src', e.target.result);
-            }
-            
-            reader.readAsDataURL(input.files[0]); // convert to base64 string
-        }
-        }
-
-        $("#file-upload").change(function() {
-        readURL(this);
-        });
-    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{% static 'upload.js' %}"></script>
 </body>
 </html>

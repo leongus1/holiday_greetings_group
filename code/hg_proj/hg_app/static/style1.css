@@ -10,7 +10,7 @@ body {
     margin-top: 30px;
   }
   
-  .file-upload-container {
+  form > .file-upload-container {
       width: 400px;
       height: 50px;
       overflow: hidden;
