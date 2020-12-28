@@ -4,29 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log and Reg</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log and Reg</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'log_regstyle.css' %}">
     <script src="{% static 'js/script.js' %}"></script>
 </head>
+<body>
+  
+    <div class="top">
+        <a href="/" style="color: gold; font-weight: bold; font-size: 25px; text-shadow: 2px 2px 3px black; background-color: black;">Back Home</a>
+        <h1>Thank you so much for joining us!
 
-<body style="background-color: black;">
+
     <audio id="bgMusic" style="float: right;">
         <source src="{% static 'jingle.mp3' %}" type="audio/mpeg" >
     </audio>
-    <a href="/" style="color: red; font-size: 20px; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Back Home</a>
-    <h1 style="margin-left: 200px; margin-bottom: -20px; margin-top: 60px; color: red; text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">Thank you so much for joining us!
+    
         <br>
         <br>
         We look forward to assist you to achieve your improvement goals!</h1>
+    </div>
     <div id='wrap'>
         {% if messages %}
             <div id='errors'>
@@ -35,8 +31,7 @@
                 {% endfor %}
             </div>
         {% endif %}
-
-        <div class='form-box' style="text-shadow: 1px 1px 5px rgb(0, 0, 0), 1px 1px 5px rgb(0, 0, 0);">
+        <div class='form-box'>
             <h1>Register:</h1>
             <form action="/create_user" method=POST>
                 {% csrf_token %}
@@ -48,7 +43,6 @@
                 <input type="submit" value='Create User'>
             </form>
         </div>
-
         <div class='form-box'>
             <h1>Login:</h1>
             <form action="/login" method=POST>
@@ -58,9 +52,8 @@
                 <input type="submit" value='Login'>
             </form>
         </div>
-
     </div>
-
+    <embed src="{% static 'jingle.mp3' %}" width="180" height="90" loop="false" autostart="false" hidden="true" />
     <script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
