@@ -131,7 +131,59 @@ def upload_media(request):
         
         # cloudinary.uploader.upload(f'/media/{this_user.id}/')
         
+def review(request, img_id):
+    if request.method == 'POST':
+        gText = request.POST['greet_text']
+        # Create a Card
+        cName = 'temp'
+        cCreator = get_user(request)
+        cMessage = gText
+        cCard = Card.objects.create(name=cName, creator=cCreator, message=cMessage)
+        print(f"card id: {cCard.id}")
+        # add the Image to the Card
+        cImage = Image.objects.get(id=img_id)
+        cCard.images.add(cImage)
 
+        # even tho we have the image id here, get it from Card (NEED to in view_card!)
+        cAllImages = cCard.images.all()
+        cImage2 = cAllImages[0]             # cAllImages is a list, strip the curlies
+        context={
+            'image': cImage2,
+            'card': cCard
+        }
+    return render(request, 'review.html', context)
+
+def view_card(request, card_id):
+    # no POST required: a guest has come to view a card.
+    # get the Card, then display it (image and greeting text)
+    cCard = Card.objects.get(id=card_id)
+    # get the 1st image of the card
+    cAllImages = cCard.images.all()
+    cImage = cAllImages[0]             # cAllImages is a list, strip the curlies
+    context={
+        'image': cImage,
+        'card': cCard
+    }
+    return render(request, 'view_card.html', context)
+
+def send_email(request, card_id):
+    if request.method == 'POST':
+        recip = request.POST['email_addr']
+        print(f"recip addr: {recip}")
+        # send the email: 
+        # TODO: put smtp parameters in settings.py
+        # put call to send_mail in here, dont forget import (see solo/hg*)
+
+        # go back to review: user may want to send multiple emails
+        cCard = Card.objects.get(id=card_id)
+        # get the 1st image of the card
+        cAllImages = cCard.images.all()
+        cImage = cAllImages[0]             # cAllImages is a list, strip the curlies
+        context={
+            'image': cImage,
+            'card': cCard
+        }
+        return render(request, 'review.html', context)
 
 ##ACTIONS
 def login(request):
