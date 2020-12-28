@@ -17,4 +17,7 @@ urlpatterns = [
     path('search', views.search),
     path('test', views.test),
     path('upload', views.upload_media),
+    path('review/<int:img_id>', views.review),
+    path('view_card/<int:card_id>', views.view_card),
+    path('send_email/<int:card_id>', views.send_email),
 ]

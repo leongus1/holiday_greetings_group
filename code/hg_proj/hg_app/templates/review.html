@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review and Invite</title>
+</head>
+<body>
+    <h2>Please review your holiday greeting</h2>
+    <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
+    <br>
+    <p style="width: 400px; margin-left: 500px;">{{ card.message }}</p>
+
+    <!-- add a form to get email address to invite, pass card iD in URL -->
+    <form action="/send_email/{{card.id}}"" method="POST">
+        {% csrf_token %}
+        Email address you want to invite
+        <input type="text" name="email_addr">
+        <input type="submit" value="Send Email">
+    </form>    
+</body>
+</html>
