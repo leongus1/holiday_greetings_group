@@ -127,12 +127,16 @@ def upload_media(request):
         this_media.name = media.name
         this_media.uploaded_by = this_user
         this_media.save()
-    return redirect(f'/create/{this_media.id}') 
+    return this_media.id 
         
         # cloudinary.uploader.upload(f'/media/{this_user.id}/')
         
 def review(request, img_id):
+    image_id = img_id
     if request.method == 'POST':
+        if request.FILES:
+            image_id = upload_media(request)
+            print(f'image_id created was {image_id}')
         gText = request.POST['greet_text']
         # Create a Card
         cName = 'temp'
@@ -141,14 +145,14 @@ def review(request, img_id):
         cCard = Card.objects.create(name=cName, creator=cCreator, message=cMessage)
         print(f"card id: {cCard.id}")
         # add the Image to the Card
-        cImage = Image.objects.get(id=img_id)
+        cImage = Image.objects.get(id=image_id)
         cCard.images.add(cImage)
 
         # even tho we have the image id here, get it from Card (NEED to in view_card!)
         cAllImages = cCard.images.all()
         cImage2 = cAllImages[0]             # cAllImages is a list, strip the curlies
         context={
-            'image': cImage2,
+            'image': cImage,
             'card': cCard
         }
     return render(request, 'review.html', context)
