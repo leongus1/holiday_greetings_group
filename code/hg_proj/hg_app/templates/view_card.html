@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holiday Greeting</title>
+</head>
+<body>
+    <h2>A holiday greeting from {{ card.creator.first_name }} {{ card.creator.last_name }}</h2>
+    <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
+    <br>
+    <p style="width: 400px; margin-left: 500px;">{{ card.message }}</p>
+
+</body>
+</html>
