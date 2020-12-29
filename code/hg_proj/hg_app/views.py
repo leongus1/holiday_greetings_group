@@ -6,6 +6,8 @@ from django.db.models import Q
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from django.conf import settings 
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -170,24 +172,14 @@ def view_card(request, card_id):
     }
     return render(request, 'view_card.html', context)
 
-def send_email(request, card_id):
-    if request.method == 'POST':
-        recip = request.POST['email_addr']
-        print(f"recip addr: {recip}")
-        # send the email: 
-        # TODO: put smtp parameters in settings.py
-        # put call to send_mail in here, dont forget import (see solo/hg*)
-
-        # go back to review: user may want to send multiple emails
-        cCard = Card.objects.get(id=card_id)
-        # get the 1st image of the card
-        cAllImages = cCard.images.all()
-        cImage = cAllImages[0]             # cAllImages is a list, strip the curlies
-        context={
-            'image': cImage,
-            'card': cCard
-        }
-        return render(request, 'review.html', context)
+def send_email(request):
+    # sendmail tested is now working, must connect with card id format
+    subject = 'welcome to Holiday Greetings'
+    message = 'Hi test user, thank you for registering with Holiday Greetings.'
+    email_from = settings.EMAIL_HOST_USER 
+    recipient_list = ['leongus1@gmail.com' ] 
+    send_mail( subject, message, email_from, recipient_list ) 
+    return redirect ('/home')
 
 ##ACTIONS
 def login(request):
