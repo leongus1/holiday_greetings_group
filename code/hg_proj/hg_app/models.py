@@ -31,10 +31,16 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     objects = UserManager()
     
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+    
 class Template(models.Model):
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.name
 
 class Image(models.Model):
     name = models.CharField(max_length=100)
@@ -65,6 +71,9 @@ class Card(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     unique_id = models.CharField(max_length=10, default=rand_str())
+    
+    def __str__(self):
+        return f'{self.creator} card #{self.id}'
     
 
 
