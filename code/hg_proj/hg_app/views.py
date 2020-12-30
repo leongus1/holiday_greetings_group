@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 import bcrypt
 from .models import *
@@ -159,6 +159,18 @@ def review(request, img_id):
         }
     return render(request, 'review.html', context)
 
+def visitor_card(request, unique, card_id):
+    this_card = Card.objects.filter(unique_id=unique, id=card_id)
+    if len(this_card)==0:
+        return HttpResponse("Invalid Link")
+    this_card = this_card[0]
+    cImage = this_card.images.first()
+    context ={
+        'image': cImage,
+        'card': this_card
+    }
+    return render (request, 'view.html', context)
+
 def view_card(request, card_id):
     # no POST required: a guest has come to view a card.
     # get the Card, then display it (image and greeting text)
@@ -172,12 +184,15 @@ def view_card(request, card_id):
     }
     return render(request, 'view_card.html', context)
 
-def send_email(request):
+def send_email(request, card_id):
+    if request.method == "POST":
+        this_user = get_user(request)
+        
     # sendmail tested is now working, must connect with card id format
-    subject = 'welcome to Holiday Greetings'
-    message = 'Hi test user, thank you for registering with Holiday Greetings.'
+    subject = f"You have a Greeting Card from {this_user.first_name}."
+    message = f"You have greeting card waiting for you from {this_user.first_name}. \n Click link to see card: {request.POST['link']}"
     email_from = settings.EMAIL_HOST_USER 
-    recipient_list = ['leongus1@gmail.com' ] 
+    recipient_list = [request.POST['email_addr']]
     send_mail( subject, message, email_from, recipient_list ) 
     return redirect ('/home')
 

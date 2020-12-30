@@ -1,6 +1,7 @@
 from django.db import models
 import re
 from cloudinary.models import CloudinaryField
+import random
 
 # Create your models here.
 
@@ -51,6 +52,9 @@ class Video(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+def rand_str():
+    return str(random.randint(10000, 99999))
+    
 class Card(models.Model):
     name = models.CharField(max_length=50, blank=True)
     creator = models.ForeignKey(User,related_name='cards', on_delete=models.CASCADE)
@@ -60,6 +64,7 @@ class Card(models.Model):
     template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    unique_id = models.CharField(max_length=10, default=rand_str())
     
 
 

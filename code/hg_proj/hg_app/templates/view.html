@@ -11,14 +11,7 @@
     <br>
     <p style="width: 400px; margin-left: 500px;">{{ card.message }}</p>
 
-    <!-- add a form to get email address to invite, pass card iD in URL -->
-    <form action="/send_email/{{card.id}}" method="POST">
-        {% csrf_token %}
-        Email address you want to invite
-        <input type="text" name="email_addr">
-        <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}">
-        <input type="submit" value="Send Email">
-    </form> 
-    <p>Or just copy link: http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}</p>   
+
+    
 </body>
 </html>

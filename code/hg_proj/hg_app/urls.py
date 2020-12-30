@@ -19,5 +19,6 @@ urlpatterns = [
     path('upload', views.upload_media),
     path('review/<int:img_id>', views.review),
     path('view_card/<int:card_id>', views.view_card),
+    path('view_card/<str:unique>/<int:card_id>', views.visitor_card),
     path('send_email/<int:card_id>', views.send_email),
 ]
