@@ -89,6 +89,30 @@ def search(request):
     # not a POST request,  send em back home
     return redirect('/')
 
+def edit_card(request, card_id):
+    card = Card.objects.get(id=card_id)
+    context = {
+        'edit': True,
+        'card': card,
+    }
+    return render (request, 'create.html', context)
+
+def update_card(request, card_id):
+    if request.method == "POST":
+        card = Card.objects.get(id=card_id)
+        if request.FILES:
+            image_id = upload_media(request)
+            img = Image.objects.get(id=image_id)
+            card.images.add(img)
+            print(f'image_id created was {image_id}')
+        card.message = request.POST['message']
+        card.save()
+        context = {
+            'card': card,
+            }
+        return render (request, 'review.html', context)
+    return redirect ('/')
+
 def test(request):
     return render (request, 'test2.html')
 
