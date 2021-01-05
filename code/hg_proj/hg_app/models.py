@@ -58,6 +58,12 @@ class Video(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+class Audio(models.Model):
+    name = models.CharField(max_length=100)
+    aud = CloudinaryField('aud', null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 def rand_str():
     return str(random.randint(10000, 99999))
     
@@ -67,6 +73,7 @@ class Card(models.Model):
     message = models.TextField(blank=True)
     images = models.ManyToManyField(Image, related_name='cards', blank=True)
     video = models.ForeignKey(Video, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
+    audio = models.ForeignKey(Audio, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

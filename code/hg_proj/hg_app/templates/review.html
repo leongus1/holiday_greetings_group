@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="{% static 'review.css' %}">
 </head>
 <body>
-    <a href="" style="color: yellow; font-size: 25px;">Back to Edit</a>
-    <h1 style="color: yellow; margin-left: 450px;">Please review your holiday greeting</h1>
-    <img style="width: 405px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
+    <a href="/edit_card/{{card.id}}" ><h3 style="color: yellow; font-size: 25px;">Go Back to Edit Card</h3></a>
+    <h2 style="color: yellow; margin-left: 450px;">Please review your holiday greeting</h2>
+    <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
     <br>
     <div style="width: 400px; border: 3px dotted yellow; margin-left: 500px; margin-bottom: 20px;">
         <p style="width: 400px; color: white; font-size: 20px; text-align: center;">{{ card.message }}</p>

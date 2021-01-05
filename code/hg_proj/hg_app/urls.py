@@ -11,6 +11,7 @@ urlpatterns = [
     path('cards/recent', views.recent),
     path('cards/trending', views.trending),
     path('cards/a-z', views.a_z),
+    path('cards/mycards', views.my_cards),
     path('create', views.create),
     path('logout', views.logout),
     path('create/<int:img_id>', views.image_details),
@@ -21,4 +22,6 @@ urlpatterns = [
     path('view_card/<int:card_id>', views.view_card),
     path('view_card/<str:unique>/<int:card_id>', views.visitor_card),
     path('send_email/<int:card_id>', views.send_email),
+    path('edit_card/<int:card_id>', views.edit_card),
+    path('update/<int:card_id>', views.update_card)
 ]

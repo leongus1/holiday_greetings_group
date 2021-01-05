@@ -12,29 +12,31 @@
     <div class="header">
       <a href="/home" style="color: red; font-size: 20px; padding: 20px; margin-top: 50px; margin-left: 1100px;">Back Home!</a>
       <a href="/logout" style="color: red; margin-left: 20px; font-size: 20px;">Logout!</a>
-      <h1 style="margin-left: 450px; font-size: 20px; color: red; margin-top: 20px;">Welcome! Here you can create your own personalized card!</h1>
+      <h1 style="margin-left: 450px; font-size: 20px; color: red; margin-top: 20px;">{% if edit %}Edit Card{% else %}Welcome! Here you can create your own personalized card!{% endif %}</h1>
       <br>
     </div>
-    <div id="upload">
-      <label class="file-upload-container" for="file-upload">
-      <input id="file-upload" type="file" style="display:none;" name="media">
-        Select Your Own Image
-      </label>
-    </div>
-    <div id="success"></div>
     <div class="card">
       {% if specific %}
       <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{card.img.version}}/{{card.img.public_id}}.{{card.img.format}} " alt="{{card.name}}" id="img-preview"/>
       {% else %}
       <img style="width: 400px; margin-left: 500px;" src="{% static 'recent1.jpg' %}" id="img-preview"/>
       {% endif %}
-        <form action="/review/{{card.id}}" runat="server" method="POST" enctype="multipart/form-data">
+      <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: 0px; margin-bottom: 0px; border: 2px solid red;">Or you can upload your image</h2>
+
+        <form {% if edit %} action="/update/{{this_card.id}}" {%else%} action="/review/{{card.id}}" {%endif%} runat="server" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
+          <div id="upload">
+            <h4><label class="file-upload-container" for="file-upload">
+            <input id="file-upload" type="file" style="display:none;" name="media">
+              Select Your Own Image
+            </label></h4>
+          </div>
+          <div id="success"></div>
           <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: -5px; margin-bottom: 0px; border: 2px solid red;">
             Greeting Here:
           </h2>
-          <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px; width: 393px;"></textarea>
-          <button type="submit" style="margin-left: 550px; margin-top: 10px;">Review Your Card</button>
+          <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px;" >{%if edit%}{{this_card.message}}{%endif%}</textarea>
+          <button type="submit" style="margin-left: 550px; margin-top: 10px;">{%if edit%} Update Card {%else%}Review Your Card{%endif%}</button>
         </form>
     </div>
 
