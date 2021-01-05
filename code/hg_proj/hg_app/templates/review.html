@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review and Invite</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'review.css' %}">
 </head>
 <body>
-    <a href="/edit_card/{{card.id}}"><h3>Go Back to Edit Card</h3></a>
-    <h2>Please review your holiday greeting</h2>
+    <a href="/edit_card/{{card.id}}" ><h3 style="color: yellow; font-size: 25px;">Go Back to Edit Card</h3></a>
+    <h2 style="color: yellow; margin-left: 450px;">Please review your holiday greeting</h2>
     <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
     <br>
-    <p style="width: 400px; margin-left: 500px;">{{ card.message }}</p>
-
+    <div style="width: 400px; border: 3px dotted yellow; margin-left: 500px; margin-bottom: 20px;">
+        <p style="width: 400px; color: white; font-size: 20px; text-align: center;">{{ card.message }}</p>
+    </div>
     <!-- add a form to get email address to invite, pass card iD in URL -->
-    <form action="/send_email/{{card.id}}" method="POST">
+    <form action="/send_email/{{card.id}}" id="send_card" method="POST">
         {% csrf_token %}
-        Email address you want to invite
-        <input type="text" name="email_addr">
-        <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}">
-        <input type="submit" value="Send Email">
-    </form> 
-    <p>Or just copy link: http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}</p>   
+        Name: <input type="text" name='f_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Name Here">
+        Subject: <input type="text" name='l_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Subject Here">
+        Email: <input type="text" name='email' style="display: block; width: 400px; height: 20px;" placeholder="Your Email Address Here">
+        <button type="submit" style="margin-left: 50px; margin-top: 30px;">Send Your Card</button>
+    </form>    
 </body>
 </html>
