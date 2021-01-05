@@ -6,6 +6,8 @@
     <title>Holiday Greeting</title>
 </head>
 <body>
+    <a href="/cards/mycards"><h3>Back to My Cards</h3></a>
+    <a href="/edit_card/{{card.id}}"><h3>Edit Card</h3></a>
     <h2>A holiday greeting from {{ card.creator.first_name }} {{ card.creator.last_name }}</h2>
     <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
     <br>

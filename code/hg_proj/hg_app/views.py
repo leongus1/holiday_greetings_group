@@ -56,6 +56,16 @@ def a_z(request):
     }
     return render(request, 'base_card.html', context)
 
+def my_cards(request):
+    this_user = get_user(request)
+    cards = Card.objects.filter(creator=this_user)
+    context ={
+        'page_name': "My Previous Cards",
+        'cards': cards,
+        'mycards': True,
+    }
+    return render(request, 'base_card.html', context)
+
 def create(request):
     return render(request, 'create.html')
 
@@ -93,7 +103,9 @@ def edit_card(request, card_id):
     card = Card.objects.get(id=card_id)
     context = {
         'edit': True,
-        'card': card,
+        'card': card.images.first(),
+        'this_card': card,
+        'specific': True,
     }
     return render (request, 'create.html', context)
 
@@ -103,12 +115,15 @@ def update_card(request, card_id):
         if request.FILES:
             image_id = upload_media(request)
             img = Image.objects.get(id=image_id)
+            old_image = card.images.first()
+            card.images.remove(old_image)
             card.images.add(img)
             print(f'image_id created was {image_id}')
-        card.message = request.POST['message']
+        card.message = request.POST['greet_text']
         card.save()
         context = {
             'card': card,
+            'image': card.images.first(),
             }
         return render (request, 'review.html', context)
     return redirect ('/')
@@ -178,7 +193,7 @@ def review(request, img_id):
         cAllImages = cCard.images.all()
         cImage2 = cAllImages[0]             # cAllImages is a list, strip the curlies
         context={
-            'image': cImage,
+            'image': cCard.images.first(),
             'card': cCard
         }
     return render(request, 'review.html', context)
@@ -196,6 +211,8 @@ def visitor_card(request, unique, card_id):
     return render (request, 'view.html', context)
 
 def view_card(request, card_id):
+    if confirm_session(request):
+        this_user = get_user(request)
     # no POST required: a guest has come to view a card.
     # get the Card, then display it (image and greeting text)
     cCard = Card.objects.get(id=card_id)
@@ -204,7 +221,8 @@ def view_card(request, card_id):
     cImage = cAllImages[0]             # cAllImages is a list, strip the curlies
     context={
         'image': cImage,
-        'card': cCard
+        'card': cCard,
+  
     }
     return render(request, 'view_card.html', context)
 
@@ -254,6 +272,6 @@ def get_user(request):
 
 def confirm_session(request):
     if 'user_id' in request.session:
-        return redirect('/')
-    return
+        return True
+    return redirect('/')
     
