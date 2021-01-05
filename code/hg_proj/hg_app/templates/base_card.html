@@ -8,9 +8,16 @@
 </head>
 <body>
     <h1>View All {{page_name}}</h1>
+    {%if mycards%}
+    {% for card in cards %}
+    <a href="/view_card/{{card.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{card.images.first.img.version}}/{{card.images.first.img.public_id}}.{{card.images.first.img.format}} " alt="{{card.images.first.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"></a>
+    {% endfor %}
+
+    {%else%}
     {% for card in cards %}
     <a href="/create/{{card.id}}"><img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{card.img.version}}/{{card.img.public_id}}.{{card.img.format}} " alt="{{card.name}}" style="width: 300px; display: inline-block; margin-right: 30px;"></a>
     {% endfor %}
+    {%endif%}
 
 </body>
 </html>
