@@ -1,6 +1,5 @@
 body {
   width: 100%;
-  height: 400px;
   background-image: url("tree.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -121,7 +120,7 @@ body {
       align-items: center;
       justify-content: center;
       background: #ffffff00;
-      margin-left: 550px;
+      margin-left: 600px;
   }
     .fa li{
       position: relative;
