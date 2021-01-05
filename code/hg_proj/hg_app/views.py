@@ -231,10 +231,10 @@ def send_email(request, card_id):
         this_user = get_user(request)
         
     # sendmail tested is now working, must connect with card id format
-    subject = f"You have a Greeting Card from {this_user.first_name}."
-    message = f"You have greeting card waiting for you from {this_user.first_name}. \n Click link to see card: {request.POST['link']}"
+    subject = request.POST['l_n']
+    message = f"{request.POST['f_n']}, You have greeting card waiting for you from {this_user.first_name}. \n Click link to see card: {request.POST['link']}"
     email_from = settings.EMAIL_HOST_USER 
-    recipient_list = [request.POST['email_addr']]
+    recipient_list = [request.POST['email']]
     send_mail( subject, message, email_from, recipient_list ) 
     return redirect ('/home')
 

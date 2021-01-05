@@ -21,6 +21,7 @@
         Name: <input type="text" name='f_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Name Here">
         Subject: <input type="text" name='l_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Subject Here">
         Email: <input type="text" name='email' style="display: block; width: 400px; height: 20px;" placeholder="Your Email Address Here">
+        <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}">
         <button type="submit" style="margin-left: 50px; margin-top: 30px;">Send Your Card</button>
     </form>    
 </body>
