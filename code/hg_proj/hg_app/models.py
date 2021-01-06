@@ -50,17 +50,19 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name
+        return f'{self.id}-{self.name}'
     
 class Video(models.Model):
     name = models.CharField(max_length=100)
     vid = CloudinaryField('vid', null=True)
+    creator = models.ForeignKey(User,related_name='video_mgs', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
 class Audio(models.Model):
     name = models.CharField(max_length=100)
     aud = CloudinaryField('aud', null=True)
+    creator = models.ForeignKey(User,related_name='audio_mgs', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
