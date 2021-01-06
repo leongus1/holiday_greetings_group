@@ -17,7 +17,7 @@ urlpatterns = [
     path('create/<int:img_id>', views.image_details),
     path('search', views.search),
     path('test', views.send_email),
-    path('upload', views.upload_media),
+    path('upload', views.upload_image),
     path('review/<int:img_id>', views.review),
     path('view_card/<int:card_id>', views.view_card),
     path('view_card/<str:unique>/<int:card_id>', views.visitor_card),
