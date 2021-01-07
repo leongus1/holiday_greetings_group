@@ -21,12 +21,12 @@
       {% else %}
       <img style="width: 400px; margin-left: 500px;" src="{% static 'recent1.jpg' %}" id="img-preview"/>
       {% endif %}
-      <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: 0px; margin-bottom: 0px; border: 2px solid red;">Or you can upload your image</h2>
+      <!-- <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: 0px; margin-bottom: 0px; border: 2px solid red;">Or you can upload your image</h2> -->
 
         <form {% if edit %} action="/update/{{this_card.id}}" {%else%} action="/review/{{card.id}}" {%endif%} runat="server" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div id="upload">
-            <h4><label class="file-upload-container" for="file-upload">
+            <h4 style="margin-left: 550px; margin-top: 10px;"><label class="file-upload-container" for="file-upload">
             <input id="file-upload" type="file" style="display:none;" name="media">
               Select Your Own Image
             </label></h4>
@@ -35,7 +35,8 @@
           <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: -5px; margin-bottom: 0px; border: 2px solid red;">
             Greeting Here:
           </h2>
-          <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px;" >{%if edit%}{{this_card.message}}{%endif%}</textarea>
+          <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px;" >{%if edit%}{{this_card.message}}{%endif%}</textarea><br>
+          
           <button type="submit" style="margin-left: 550px; margin-top: 10px;">{%if edit%} Update Card {%else%}Review Your Card{%endif%}</button>
         </form>
     </div>
