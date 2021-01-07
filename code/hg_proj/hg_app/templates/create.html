@@ -36,14 +36,7 @@
             Greeting Here:
           </h2>
           <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px;" >{%if edit%}{{this_card.message}}{%endif%}</textarea><br>
-
-          <select name="audio" style="margin-left: 550px; margin-top: 10px;">
-            <option value="0">Add a Song</option>
-            <option value="1">Jingle Bells</option>
-            <option value="2">Rudolph the Red-Nosed Reindeer</option>
-            <option value="3">Wish you a Merry Christmas</option>
-          </select><br>
-
+          
           <button type="submit" style="margin-left: 550px; margin-top: 10px;">{%if edit%} Update Card {%else%}Review Your Card{%endif%}</button>
         </form>
     </div>
