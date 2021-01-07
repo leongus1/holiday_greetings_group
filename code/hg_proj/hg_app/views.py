@@ -131,6 +131,9 @@ def update_card(request, card_id):
             card.images.add(img)
             print(f'image_id created was {image_id}')
         card.message = request.POST['greet_text']
+        if 'song_id' in request.POST:
+            print(f"song id is {request.POST['song_id']}")
+            card.audio = Audio.objects.get(id=request.POST['song_id'])
         card.save()
         context = {
             'card': card,
@@ -218,6 +221,10 @@ def review(request, img_id):
         cMessage = gText
         cCard = Card.objects.create(name=cName, creator=cCreator, message=cMessage)
         print(f"card id: {cCard.id}")
+        if 'song_id' in request.POST:
+            print(f"song id is {request.POST['song_id']}")
+            cCard.audio = Audio.objects.get(id=request.POST['song_id'])
+        cCard.save()
         # add the Image to the Card
         cImage = Image.objects.get(id=image_id)
         cCard.images.add(cImage)

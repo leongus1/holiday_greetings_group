@@ -22,7 +22,7 @@
       {% else %}
       <img style="width: 400px; margin-left: 500px;" src="{% static 'recent1.jpg' %}" id="img-preview"/>
       {% endif %}
-        <form action="/review/{{card.id}}" runat="server" method="POST" enctype="multipart/form-data">
+        <form {%if edit%} action="/update/{{this_card.id}}" {%else%} action="/review/{{card.id}}" {%endif%} runat="server" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div id="upload">
             <label class="file-upload-container" for="file-upload">
@@ -34,35 +34,15 @@
           <h2 style="color: red; margin-left: 500px; width: 396px; display: inline-block; background-color: yellow; text-align: center;  margin-top: -100px; margin-bottom: 0px; border: 2px solid red;">
             Greeting Here:
           </h2>
-          <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px; width: 393px;"></textarea>
-          <button type="submit" style="margin-left: 550px; margin-top: 10px;">Review Your Card</button>
+          <textarea cols="47" rows="10" name="greet_text" placeholder="Enter Your Greeting Here" style="margin-left: 500px; display: block; margin-top: 0px; width: 393px;">{%if edit%} {{this_card.message}}{%endif%}</textarea>
+
+          {% include 'song_snippet.html'%}
+
+          <button type="submit" style="margin-left: 550px; margin-top: 10px;">{%if edit%} Update Card {%else%}Review Your Card{%endif%}</button>
         </form>
     </div>
-    <div class="add_song">
-      <h3>Add a song to your card</h3>
-      <table class="table-dark">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Song</th>
-                <th>Add Song</th>
-            </tr>
-        </thead>
-        <tbody>
-          {%for song in songs%}
-            <tr>
-                <td>{{song.name}}</td>
-                <td>
-                  <audio controls style="width: 88px;">
-                    <source  src="https://res.cloudinary.com/dnwhdkhgg/video/upload/v{{song.aud.version}}/{{song.aud.public_id}}.{{song.aud.format}}" type="audio/mpeg"  >
-                  </audio>
-                </td>
-                <td><input type="radio" name="song_id" value={{song.id}}></td>
-            </tr>
-          {%endfor%}
-        </tbody>
-    </table>
-    </div>
+    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
       function readURL(input) {
