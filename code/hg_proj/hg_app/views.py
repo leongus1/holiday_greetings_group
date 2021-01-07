@@ -119,7 +119,7 @@ def update_card(request, card_id):
     if request.method == "POST":
         card = Card.objects.get(id=card_id)
         if request.FILES:
-            image_id = upload_media(request)
+            image_id = upload_image(request)
             img = Image.objects.get(id=image_id)
             old_image = card.images.first()
             card.images.remove(old_image)
@@ -164,7 +164,7 @@ def register(request):
     # was not a post request, send user back to home page
     return redirect('/')
 
-def upload_media(request):
+def upload_image(request):
     if request.method == 'POST':
         this_user = get_user(request)
         file = request.FILES
@@ -175,14 +175,36 @@ def upload_media(request):
         this_media.uploaded_by = this_user
         this_media.save()
     return this_media.id 
-        
-        # cloudinary.uploader.upload(f'/media/{this_user.id}/')
+
+def upload_video(request):
+    if request.method == 'POST':
+        this_user = get_user(request)
+        file = request.FILES
+        media = file.get('video')
+        this_media = Video()
+        this_media.vid = media
+        this_media.name = media.name
+        this_media.uploaded_by = this_user
+        this_media.save()
+    return this_media.id 
+
+def upload_audio(request):
+    if request.method == 'POST':
+        this_user = get_user(request)
+        file = request.FILES
+        media = file.get('audio')
+        this_media = Audio()
+        this_media.aud = media
+        this_media.name = media.name
+        this_media.uploaded_by = this_user
+        this_media.save()
+    return this_media.id 
         
 def review(request, img_id):
     image_id = img_id
     if request.method == 'POST':
         if request.FILES:
-            image_id = upload_media(request)
+            image_id = upload_image(request)
             print(f'image_id created was {image_id}')
         gText = request.POST['greet_text']
         # Create a Card
@@ -194,10 +216,6 @@ def review(request, img_id):
         # add the Image to the Card
         cImage = Image.objects.get(id=image_id)
         cCard.images.add(cImage)
-
-        # even tho we have the image id here, get it from Card (NEED to in view_card!)
-        cAllImages = cCard.images.all()
-        cImage2 = cAllImages[0]             # cAllImages is a list, strip the curlies
         context={
             'image': cCard.images.first(),
             'card': cCard

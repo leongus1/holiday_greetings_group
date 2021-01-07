@@ -50,19 +50,27 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name
+        return f'{self.id}-{self.name}'
     
 class Video(models.Model):
     name = models.CharField(max_length=100)
-    vid = CloudinaryField('vid', null=True)
+    vid = CloudinaryField('vid', null=True, resource_type='video')
+    creator = models.ForeignKey(User,related_name='video_mgs', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return f'{self.id}-{self.name}'
+    
 class Audio(models.Model):
     name = models.CharField(max_length=100)
-    aud = CloudinaryField('aud', null=True)
+    aud = CloudinaryField('aud', null=True, resource_type='video')
+    creator = models.ForeignKey(User,related_name='audio_mgs', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f'{self.id}-{self.name}'
     
 def rand_str():
     return str(random.randint(10000, 99999))
