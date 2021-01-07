@@ -210,10 +210,6 @@ def review(request, img_id):
         # add the Image to the Card
         cImage = Image.objects.get(id=image_id)
         cCard.images.add(cImage)
-
-        # even tho we have the image id here, get it from Card (NEED to in view_card!)
-        cAllImages = cCard.images.all()
-        cImage2 = cAllImages[0]             # cAllImages is a list, strip the curlies
         context={
             'image': cCard.images.first(),
             'card': cCard
