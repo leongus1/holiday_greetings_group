@@ -69,6 +69,12 @@ def my_cards(request):
 def create(request):
     return render(request, 'create.html')
 
+def granted(request, item_id):
+    wish_granted = Card.objects.get(id=item_id)
+    wish_granted.granted =  True
+    wish_granted.save()
+    return redirect('/create')
+
 def image_details(request, img_id):
     context={
         'card': Image.objects.get(id=img_id),

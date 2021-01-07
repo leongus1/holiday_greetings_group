@@ -75,6 +75,7 @@ class Card(models.Model):
     video = models.ForeignKey(Video, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     audio = models.ForeignKey(Audio, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
+    granted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     unique_id = models.CharField(max_length=10, default=rand_str())
