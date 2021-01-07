@@ -45,15 +45,21 @@
             <tr>
                 <th>Title</th>
                 <th>Song</th>
-                <th>Action</th>
+                <th>Add Song</th>
             </tr>
         </thead>
         <tbody>
+          {%for song in songs%}
             <tr>
-                <td>Jingle Bell</td>
-                <td><embed src="{% static 'jingle.mp3' %}" width="70" height="30"/></td>
-                <td><a href="/granted/{{ message.id }}">Add Song</a></td>
+                <td>{{song.name}}</td>
+                <td>
+                  <audio controls style="width: 88px;">
+                    <source  src="https://res.cloudinary.com/dnwhdkhgg/video/upload/v{{song.aud.version}}/{{song.aud.public_id}}.{{song.aud.format}}" type="audio/mpeg"  >
+                  </audio>
+                </td>
+                <td><input type="radio" name="song_id" value={{song.id}}></td>
             </tr>
+          {%endfor%}
         </tbody>
     </table>
     </div>

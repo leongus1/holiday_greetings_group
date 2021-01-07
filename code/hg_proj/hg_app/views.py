@@ -67,6 +67,9 @@ def my_cards(request):
     return render(request, 'base_card.html', context)
 
 def create(request):
+    context={
+        'songs': Audio.objects.all(),
+    }
     return render(request, 'create.html')
 
 def granted(request, item_id):
@@ -79,6 +82,7 @@ def image_details(request, img_id):
     context={
         'card': Image.objects.get(id=img_id),
         'specific': True,
+        'songs': Audio.objects.all(),
         
     }
     return render(request, 'create.html', context)
@@ -112,6 +116,7 @@ def edit_card(request, card_id):
         'card': card.images.first(),
         'this_card': card,
         'specific': True,
+        'songs': Audio.objects.all(),
     }
     return render (request, 'create.html', context)
 
