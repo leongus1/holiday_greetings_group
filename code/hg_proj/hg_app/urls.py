@@ -15,6 +15,7 @@ urlpatterns = [
     path('create', views.create),
     path('logout', views.logout),
     path('create/<int:img_id>', views.image_details),
+    path('granted/<int:item_id>', views.granted),
     path('search', views.search),
     path('test', views.send_email),
     path('upload', views.upload_image),
