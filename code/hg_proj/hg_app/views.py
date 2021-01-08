@@ -312,4 +312,23 @@ def confirm_session(request):
     if 'user_id' in request.session:
         return True
     return redirect('/')
+
+    # Add Likes to the view page
+
+def add_like(request, user_id):
+    liked_message = Forum.objects.get(id=user_id)
+    print(f'user_id{user_id}')
+    print(liked_message)
+    user_liking = User.objects.get(id=request.session['user_id'])
+    liked_message.user_likes.add(user_liking)
+    print(user_liking.first_name)
+    return redirect('/forum')
+
+    # Create comments on view page
+
+def create_comm(request):
+    if request.method=='POST':
+        Comment.objects.create(content=request.POST['contents'], poster=User.objects.get(id=request.session['user_id']), message=Forum.objects.get(id=request.POST['message']))
+        return redirect('/forum')
+    return redirect('/')
     

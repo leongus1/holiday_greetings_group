@@ -84,6 +84,7 @@ class Card(models.Model):
     audio = models.ForeignKey(Audio, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     granted = models.BooleanField(default=False)
+    user_likes = models.ManyToManyField(User, related_name='liked_posts')
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     unique_id = models.CharField(max_length=10, default=rand_str())
@@ -91,6 +92,12 @@ class Card(models.Model):
     def __str__(self):
         return f'{self.creator} card #{self.id}'
     
+class Comment(models.Model):
+    content = models.TextField()
+    poster = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    message = models.ForeignKey(Card, related_name="comments", on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
 
 
 
