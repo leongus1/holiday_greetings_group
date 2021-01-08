@@ -4,9 +4,11 @@ body {
 #send_card {
     display: block;
     color: yellow;
-    margin-left: 500px;
+    margin: auto;
     font-size: 20px;
+    width: 420px;
 }
+
 button[type="submit"] {
     width: 300px;
     border: none;

@@ -8,24 +8,39 @@
     <link rel="stylesheet" href="{% static 'review.css' %}">
 </head>
 <body>
-    <a href="/edit_card/{{card.id}}" ><h3 style="color: yellow; font-size: 25px;">Go Back to Edit Card</h3></a>
-    <h2 style="color: yellow; margin-left: 450px;">Please review your holiday greeting</h2>
+    {%if visitor%}
+    <h2 style="color: yellow; font-size: 30px; text-align: center;">A holiday greeting from {{ card.creator.first_name }} {{ card.creator.last_name }}</h2>
+    {%else%}
+    <div style="margin: auto 20px; display: flex; justify-content: space-between;">
+        <a href="/edit_card/{{card.id}}" ><h3 style="color: yellow; font-size: 25px;">Go Back to Edit Card</h3></a>
+        <a href="/cards/mycards"><h3 style="color: yellow; font-size: 25px; ">Back to My Cards</h3></a>
+        
+    </div>
+    <h1 style="color: yellow;  text-align: center;">Please review your holiday greeting</h1>
+    
+    
+    {%endif%}
     <audio autoplay>
         <source  src="https://res.cloudinary.com/dnwhdkhgg/video/upload/v{{card.audio.aud.version}}/{{card.audio.aud.public_id}}.{{card.audio.aud.format}}" type="audio/mpeg"  >
     </audio>
-    <img style="width: 400px; margin-left: 500px;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
+    <img style="width: 400px; display: block; margin: 10px auto;" src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
     <br>
-    <div style="width: 400px; border: 3px dotted yellow; margin-left: 500px; margin-bottom: 20px;">
+    <div style="width: 400px; border: 3px dotted yellow; margin:auto; margin-bottom: 20px;">
         <p style="width: 400px; color: white; font-size: 20px; text-align: center;">{{ card.message }}</p>
     </div>
     <!-- add a form to get email address to invite, pass card iD in URL -->
-    <form action="/send_email/{{card.id}}" id="send_card" method="POST">
-        {% csrf_token %}
-        Name: <input type="text" name='f_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Name Here">
-        Subject: <input type="text" name='l_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Subject Here">
-        Email: <input type="text" name='email' style="display: block; width: 400px; height: 20px;" placeholder="Your Email Address Here">
-        <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}">
-        <button type="submit" style="margin-left: 50px; margin-top: 30px;">Send Your Card</button>
-    </form>    
+    {%if not visitor%}
+    
+        <form action="/send_email/{{card.id}}" id="send_card" method="POST" >
+            {% csrf_token %}
+            Name: <br><input type="text" name='f_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Name Here">
+            Subject: <br><input type="text" name='l_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Subject Here">
+            Email: <br><input type="text" name='email' style="display: block; width: 400px; height: 20px;" placeholder="Your Email Address Here">
+            <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}">
+            <button type="submit" style="margin-left: 50px; margin-top: 30px;">Send Your Card</button>
+        </form> 
+   
+    
+    {%endif%}   
 </body>
 </html>
