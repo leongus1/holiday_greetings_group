@@ -229,6 +229,7 @@ def review(request, img_id):
         cImage = Image.objects.get(id=image_id)
         cCard.images.add(cImage)
         context={
+            'visitor': False,
             'image': cCard.images.first(),
             'card': cCard
         }
@@ -241,10 +242,11 @@ def visitor_card(request, unique, card_id):
     this_card = this_card[0]
     cImage = this_card.images.first()
     context ={
+        'visitor': True,
         'image': cImage,
         'card': this_card
     }
-    return render (request, 'view.html', context)
+    return render (request, 'review.html', context)
 
 def view_card(request, card_id):
     if confirm_session(request):
@@ -260,7 +262,7 @@ def view_card(request, card_id):
         'card': cCard,
   
     }
-    return render(request, 'view_card.html', context)
+    return render(request, 'review.html', context)
 
 def send_email(request, card_id):
     if request.method == "POST":
