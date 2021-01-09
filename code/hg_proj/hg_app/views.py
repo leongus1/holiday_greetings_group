@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-import bcrypt
+import bcrypt, random
 from .models import *
 from django.db.models import Q
 import cloudinary
@@ -255,17 +255,34 @@ def upload_audio(request):
         this_media.name = media.name
         this_media.uploaded_by = this_user
         this_media.save()
-    return this_media.id 
+    return this_media.pk 
         
 def send_email(request, card_id):
     if request.method == "POST":
         this_user = get_user(request)
-    subject = request.POST['l_n']
-    message = f"{request.POST['f_n']}, You have greeting card waiting for you from {this_user.first_name}. \n Click link to see card: {request.POST['link']}"
-    email_from = settings.EMAIL_HOST_USER 
-    recipient_list = [request.POST['email']]
-    send_mail( subject, message, email_from, recipient_list ) 
-    return redirect ('/home')
+        this_card = Card.objects.get(id=card_id)
+        img = this_card.images.first()
+        if this_card.receiver_email:
+            new_card = this_card
+            new_card.pk = None
+            new_card.save()
+            new_card.unique_id = random.randint(10000, 99999)
+            new_card.images.add(img)
+            new_card.save()
+            this_card = new_card
+        else:
+            this_card.receiver_name = request.POST['name']
+            this_card.receiver_email = request.POST['email']
+        this_card.save()
+        link=f"http://localhost:8000/view_card/{this_card.unique_id}/{this_card.id}"
+        subject = request.POST['subject']
+        message = f"{request.POST['name']}, You have greeting card waiting for you from {this_user.first_name}. \n Click link to see card: {link}"
+        email_from = settings.EMAIL_HOST_USER 
+        recipient_list = [request.POST['email']]
+        send_mail(subject, message, email_from, recipient_list ) 
+        
+        return redirect (f'/view_card/{this_card.id}')
+    return redirect ('/')
 
 # Create comments on view page
 def create_comm(request):
@@ -274,9 +291,11 @@ def create_comm(request):
         this_comment = Comment.objects.create(content=request.POST['contents'], card=this_card)
         if logged_user(request):
             this_user = get_user(request)
-            this_comment.poster = this_user
+            this_comment.poster = f'{this_user.first_name} {this_user.last_name}'
             this_comment.save()
             return redirect (f'/view_card/{this_card.id}')
+        this_comment.poster = f'{this_card.receiver_name}'
+        this_comment.save()
         return redirect(f'/view_card/{this_card.unique_id}/{this_card.id}')
     return redirect('/')
 
@@ -323,11 +342,10 @@ def logged_user(request):
     return False
     # Add Likes to the view page
 
-def add_like(request, user_id):
-    liked_message = Forum.objects.get(id=user_id)
-    print(f'user_id{user_id}')
-    print(liked_message)
-    user_liking = User.objects.get(id=request.session['user_id'])
-    liked_message.user_likes.add(user_liking)
-    print(user_liking.first_name)
-    return redirect('/forum')
+def add_like(request, card_id):
+    this_card = Card.objects.get(id=card_id)
+    this_card.likes += 1
+    if logged_user(request):
+        this_card.user_likes.add(get_user(request))
+        return redirect(f'/view_card/{this_card.id}')
+    return redirect(f'/view_card/{this_card.unique_id}/{this_card.id}')

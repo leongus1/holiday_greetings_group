@@ -23,45 +23,56 @@
     <audio autoplay>
         <source  src="https://res.cloudinary.com/dnwhdkhgg/video/upload/v{{card.audio.aud.version}}/{{card.audio.aud.public_id}}.{{card.audio.aud.format}}" type="audio/mpeg"  >
     </audio>
-    <img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
-    <div class="greeting">
-        <p style="color: black; font-size: 20px; text-align: center;">{{ card.message }}</p>
+    <div id="img-msg" style="display: flex; justify-content: center; margin-top: 20px;">
+        <img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
+        <div class="greeting">
+            <p>{{ card.message }}</p>
+        </div>
     </div>
+    
     <!-- if song add here -->
     <!-- Likes -->
     <a href="/like/{{card.id}}"><img src="{% static 'like2.svg' %}" style="width: 100px; margin: auto; display: block; margin-top: 30px;"/></a>
-    <p style="margin-left: 10px; color: black; text-decoration: underline; width: 100px; display: inline-block;">{{ message.user_likes.count }}
-    <!-- Comments would display here -->
-    {%for comment in comments%}
-    <div class="message" style="margin: 0px auto 10px; width: 500px; border: paleturquoise 2px dotted; background-color: rgba(175, 238, 238, 0.144);">
-        <p>{{comment.content}}</p>
-        {%if comment.poster%}
-        <p>{{comment.poster}}</p>
-        {%else%}
-        <p>By card receiver</p>
-        {%endif%}
-    </div>
-    {%endfor%} 
+    <p style="margin-left: 10px; color: black; text-decoration: underline; width: 100px; display: inline-block;">{{ message.user_likes.count }}</p>
 
-    <form action="/create_comment" id="comment" method="POST">
-        {%csrf_token%}
-        <textarea name="contents" cols="60" rows="4" placeholder="Leave a Comment"></textarea><br>
-        <input type="hidden" name="card_id" value={{card.id}}>
-        <button type="submit" id="button">Add Comment</button>
-    </form>
-    <!-- add a form to get email address to invite, pass card iD in URL -->
-    {%if not visitor%}
-    
-        <form action="/send_email/{{card.id}}" id="send_card" method="POST" >
-            {% csrf_token %}
-            Name: <br><input type="text" name='f_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Name Here">
-            Subject: <br><input type="text" name='l_n' style="display: block; margin-bottom: 20px; width: 400px; height: 20px;" placeholder="Your Subject Here">
-            Email: <br><input type="text" name='email' style="display: block; width: 400px; height: 20px;" placeholder="Your Email Address Here">
-            <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}">
-            <button type="submit" style="margin-left: 50px; margin-top: 30px;">Send Your Card</button>
-        </form> 
-   
-    
-    {%endif%}   
+    <div id="bottom" style="display: flex; justify-content: center;">
+        <!-- add a form to get email address to invite, pass card iD in URL -->
+        {%if not visitor%}
+        
+            <form action="/send_email/{{card.id}}" id="send_card" method="POST" >
+                {% csrf_token %}
+                Name: <br><input type="text" name='name' style="display: block; margin-bottom: 20px; width: 100%; height: 20px;" placeholder="Receiver Name">
+                Subject: <br><input type="text" name='subject' style="display: block; margin-bottom: 20px; width: 100%; height: 20px;" placeholder="Your Subject Here">
+                Email: <br><input type="text" name='email' style="display: block; width: 100%; height: 20px;" placeholder="Receiver Email Address Here">
+                <input type="hidden" name="link" value="http://localhost:8000/view_card/{{card.unique_id}}/{{card.id}}"><br>
+                <button type="submit" class="button">Send Your Card</button>
+            </form>     
+        {%endif%}
+
+
+        <!-- Comments would display here -->
+        <div id="msg-section" style="margin-left: 20px;" >
+            {%for comment in comments%}
+            <div class="message" style="margin: 0px auto 10px; width: 500px; border: paleturquoise 2px dotted; background-color: rgba(175, 238, 238, 0.144);">
+                <h4>{{comment.content}}</h4>
+                {%if comment.poster%}
+                <p>{{comment.poster}}</p>
+                {%else%}
+                <p>By card receiver</p>
+                {%endif%}
+            </div>
+            {%endfor%} 
+
+            <form action="/create_comment" id="comment" method="POST">
+                {%csrf_token%}
+                <textarea name="contents" cols="60" rows="4" placeholder="Leave a Comment"></textarea><br>
+                <input type="hidden" name="card_id" value={{card.id}}>
+                <button type="submit" class="button">Add Comment</button>
+            </form>
+        </div>
+        
+        
+    </div>
+       
 </body>
 </html>
