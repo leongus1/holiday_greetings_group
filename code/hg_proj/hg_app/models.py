@@ -94,12 +94,7 @@ class Card(models.Model):
     
 class Comment(models.Model):
     content = models.TextField()
-    poster = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
-    message = models.ForeignKey(Card, related_name="comments", on_delete=models.CASCADE)
+    poster = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE, null=True, blank=True)
+    card = models.ForeignKey(Card, related_name="comments", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-
-
-
-    
-    

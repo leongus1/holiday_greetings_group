@@ -135,15 +135,64 @@ def update_card(request, card_id):
             print(f"song id is {request.POST['song_id']}")
             card.audio = Audio.objects.get(id=request.POST['song_id'])
         card.save()
-        context = {
-            'card': card,
-            'image': card.images.first(),
-            }
-        return render (request, 'review.html', context)
+        return redirect (f'/view_card/{card.id}')
     return redirect ('/')
 
 def test(request):
     return render (request, 'test2.html')
+
+def review(request, img_id):
+    image_id = img_id
+    if request.method == 'POST':
+        if request.FILES:
+            image_id = upload_image(request)
+            print(f'image_id created was {image_id}')
+        gText = request.POST['greet_text']
+        # Create a Card
+        cName = 'temp'
+        cCreator = get_user(request)
+        cMessage = gText
+        cCard = Card.objects.create(name=cName, creator=cCreator, message=cMessage)
+        print(f"card id: {cCard.id}")
+        if 'song_id' in request.POST:
+            print(f"song id is {request.POST['song_id']}")
+            cCard.audio = Audio.objects.get(id=request.POST['song_id'])
+        cCard.save()
+        # add the Image to the Card
+        cImage = Image.objects.get(id=image_id)
+        cCard.images.add(cImage)
+        context={
+            'visitor': False,
+            'image': cCard.images.first(),
+            'card': cCard,
+            'comments': cCard.comments.all(),
+        }
+    return render(request, 'review.html', context)
+
+def visitor_card(request, unique, card_id):
+    this_card = Card.objects.filter(unique_id=unique, id=card_id)
+    if len(this_card)==0:
+        return HttpResponse("Invalid Link")
+    this_card = this_card[0]
+    cImage = this_card.images.first()
+    context ={
+        'visitor': True,
+        'image': cImage,
+        'card': this_card,
+        'comments': this_card.comments.all(),
+    }
+    return render (request, 'review.html', context)
+
+def view_card(request, card_id):
+    if confirm_session(request):
+        this_user = get_user(request)
+    cCard = Card.objects.get(id=card_id)        
+    context={
+        'image': cCard.images.first() ,
+        'card': cCard,
+        'comments': cCard.comments.all(),
+    }
+    return render(request, 'review.html', context)
 
 
 ##CREATE DATA    
@@ -208,73 +257,28 @@ def upload_audio(request):
         this_media.save()
     return this_media.id 
         
-def review(request, img_id):
-    image_id = img_id
-    if request.method == 'POST':
-        if request.FILES:
-            image_id = upload_image(request)
-            print(f'image_id created was {image_id}')
-        gText = request.POST['greet_text']
-        # Create a Card
-        cName = 'temp'
-        cCreator = get_user(request)
-        cMessage = gText
-        cCard = Card.objects.create(name=cName, creator=cCreator, message=cMessage)
-        print(f"card id: {cCard.id}")
-        if 'song_id' in request.POST:
-            print(f"song id is {request.POST['song_id']}")
-            cCard.audio = Audio.objects.get(id=request.POST['song_id'])
-        cCard.save()
-        # add the Image to the Card
-        cImage = Image.objects.get(id=image_id)
-        cCard.images.add(cImage)
-        context={
-            'visitor': False,
-            'image': cCard.images.first(),
-            'card': cCard
-        }
-    return render(request, 'review.html', context)
-
-def visitor_card(request, unique, card_id):
-    this_card = Card.objects.filter(unique_id=unique, id=card_id)
-    if len(this_card)==0:
-        return HttpResponse("Invalid Link")
-    this_card = this_card[0]
-    cImage = this_card.images.first()
-    context ={
-        'visitor': True,
-        'image': cImage,
-        'card': this_card
-    }
-    return render (request, 'review.html', context)
-
-def view_card(request, card_id):
-    if confirm_session(request):
-        this_user = get_user(request)
-    # no POST required: a guest has come to view a card.
-    # get the Card, then display it (image and greeting text)
-    cCard = Card.objects.get(id=card_id)
-    # get the 1st image of the card
-    cAllImages = cCard.images.all()
-    cImage = cAllImages[0]             # cAllImages is a list, strip the curlies
-    context={
-        'image': cImage,
-        'card': cCard,
-  
-    }
-    return render(request, 'review.html', context)
-
 def send_email(request, card_id):
     if request.method == "POST":
         this_user = get_user(request)
-        
-    # sendmail tested is now working, must connect with card id format
     subject = request.POST['l_n']
     message = f"{request.POST['f_n']}, You have greeting card waiting for you from {this_user.first_name}. \n Click link to see card: {request.POST['link']}"
     email_from = settings.EMAIL_HOST_USER 
     recipient_list = [request.POST['email']]
     send_mail( subject, message, email_from, recipient_list ) 
     return redirect ('/home')
+
+# Create comments on view page
+def create_comm(request):
+    if request.method=='POST':
+        this_card = Card.objects.get(id=request.POST['card_id'])
+        this_comment = Comment.objects.create(content=request.POST['contents'], card=this_card)
+        if logged_user(request):
+            this_user = get_user(request)
+            this_comment.poster = this_user
+            this_comment.save()
+            return redirect (f'/view_card/{this_card.id}')
+        return redirect(f'/view_card/{this_card.unique_id}/{this_card.id}')
+    return redirect('/')
 
 ##ACTIONS
 def login(request):
@@ -313,6 +317,10 @@ def confirm_session(request):
         return True
     return redirect('/')
 
+def logged_user(request):
+    if 'user_id' in request.session:
+        return True
+    return False
     # Add Likes to the view page
 
 def add_like(request, user_id):
@@ -323,12 +331,3 @@ def add_like(request, user_id):
     liked_message.user_likes.add(user_liking)
     print(user_liking.first_name)
     return redirect('/forum')
-
-    # Create comments on view page
-
-def create_comm(request):
-    if request.method=='POST':
-        Comment.objects.create(content=request.POST['contents'], poster=User.objects.get(id=request.session['user_id']), message=Forum.objects.get(id=request.POST['message']))
-        return redirect('/forum')
-    return redirect('/')
-    

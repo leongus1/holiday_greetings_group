@@ -29,12 +29,25 @@
     </div>
     <!-- if song add here -->
     <!-- Likes -->
-    <a href="/like/{{message.id}}"><img src="{% static 'like2.svg' %}" style="width: 100px; margin-left: 600px; display: inline-block; margin-top: 30px;"/></a>
+    <a href="/like/{{card.id}}"><img src="{% static 'like2.svg' %}" style="width: 100px; margin: auto; display: block; margin-top: 30px;"/></a>
     <p style="margin-left: 10px; color: black; text-decoration: underline; width: 100px; display: inline-block;">{{ message.user_likes.count }}
     <!-- Comments would display here -->
-    <form action="">
-        <textarea id="comment" cols="48" rows="10"></textarea>
-        <button id="button">Add Comment</button>
+    {%for comment in comments%}
+    <div class="message" style="margin: 0px auto 10px; width: 500px; border: paleturquoise 2px dotted; background-color: rgba(175, 238, 238, 0.144);">
+        <p>{{comment.content}}</p>
+        {%if comment.poster%}
+        <p>{{comment.poster}}</p>
+        {%else%}
+        <p>By card receiver</p>
+        {%endif%}
+    </div>
+    {%endfor%} 
+
+    <form action="/create_comment" id="comment" method="POST">
+        {%csrf_token%}
+        <textarea name="contents" cols="60" rows="4" placeholder="Leave a Comment"></textarea><br>
+        <input type="hidden" name="card_id" value={{card.id}}>
+        <button type="submit" id="button">Add Comment</button>
     </form>
     <!-- add a form to get email address to invite, pass card iD in URL -->
     {%if not visitor%}
