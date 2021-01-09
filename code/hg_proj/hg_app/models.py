@@ -50,7 +50,7 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'{self.id}-{self.name}'
+        return f'{self.pk}-{self.name}'
     
 class Video(models.Model):
     name = models.CharField(max_length=100)
@@ -60,7 +60,7 @@ class Video(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'{self.id}-{self.name}'
+        return f'{self.pk}-{self.name}'
     
 class Audio(models.Model):
     name = models.CharField(max_length=100)
@@ -70,7 +70,7 @@ class Audio(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f'{self.id}-{self.name}'
+        return f'{self.pk}-{self.name}'
     
 def rand_str():
     return str(random.randint(10000, 99999))
@@ -85,16 +85,19 @@ class Card(models.Model):
     template = models.ForeignKey(Template, related_name='cards', blank=True, null=True, on_delete=models.CASCADE)
     granted = models.BooleanField(default=False)
     user_likes = models.ManyToManyField(User, related_name='liked_posts')
+    likes = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     unique_id = models.CharField(max_length=10, default=rand_str())
+    receiver_name = models.CharField(max_length=100, blank=True, null=True)
+    receiver_email = models.CharField(max_length=100, blank=True, null=True)
     
     def __str__(self):
-        return f'{self.creator} card #{self.id}'
+        return f'{self.creator} card #{self.pk}'
     
 class Comment(models.Model):
     content = models.TextField()
-    poster = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE, null=True, blank=True)
+    poster = models.CharField(max_length=100)
     card = models.ForeignKey(Card, related_name="comments", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)

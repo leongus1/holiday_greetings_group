@@ -6,24 +6,25 @@ body {
 #img-preview {
     width: 400px;
     display: inline-block;
-    margin-left: 320px;
+    margin-right: 20px;
 }
 .greeting {
     display: inline-block;
     width: 400px;
-    height: 244px;
-    border: 3px dotted black;
+    height: auto;
+    border: 4px dotted paleturquoise;
     vertical-align: top;
     text-align: center;
     font-size: 20px;
-    background: rgba(128, 128, 128, 0.205);
-    color: red;
+    background: rgba(103, 139, 139, 0.247);
+    color: rgb(0, 104, 104);
 }
 #comment {
     margin:auto;    
     text-align: center;
+    
 }
-#button {
+.button {
     display: block;
     width: 150px;
     height: 35px;
@@ -37,3 +38,11 @@ body {
     box-shadow: 5px 5px darkblue;
     margin:auto;
 }
+
+#send_card{
+    margin-right: 20px;
+    width: 250px;  
+    border-right: paleturquoise dotted 5px;
+    padding-right: 50px;
+}
+
