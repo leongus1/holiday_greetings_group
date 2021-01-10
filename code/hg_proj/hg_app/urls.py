@@ -25,6 +25,6 @@ urlpatterns = [
     path('send_email/<int:card_id>', views.send_email),
     path('edit_card/<int:card_id>', views.edit_card),
     path('update/<int:card_id>', views.update_card),
-    path('like/<int:user_id>', views.add_like),
+    path('like/<int:card_id>', views.add_like),
     path('create_comment', views.create_comm),
 ]

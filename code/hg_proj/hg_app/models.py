@@ -91,6 +91,7 @@ class Card(models.Model):
     unique_id = models.CharField(max_length=10, default=rand_str())
     receiver_name = models.CharField(max_length=100, blank=True, null=True)
     receiver_email = models.CharField(max_length=100, blank=True, null=True)
+    viewed = models.BooleanField(default=False)
     
     def __str__(self):
         return f'{self.creator} card #{self.pk}'

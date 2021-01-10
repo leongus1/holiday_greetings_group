@@ -143,6 +143,7 @@ def test(request):
 
 def review(request, img_id):
     image_id = img_id
+    this_user = get_user(request)
     if request.method == 'POST':
         if request.FILES:
             image_id = upload_image(request)
@@ -162,6 +163,7 @@ def review(request, img_id):
         cImage = Image.objects.get(id=image_id)
         cCard.images.add(cImage)
         context={
+            'user': this_user,
             'visitor': False,
             'image': cCard.images.first(),
             'card': cCard,
@@ -175,6 +177,8 @@ def visitor_card(request, unique, card_id):
         return HttpResponse("Invalid Link")
     this_card = this_card[0]
     cImage = this_card.images.first()
+    this_card.viewed = True
+    this_card.save()
     context ={
         'visitor': True,
         'image': cImage,
@@ -188,6 +192,7 @@ def view_card(request, card_id):
         this_user = get_user(request)
     cCard = Card.objects.get(id=card_id)        
     context={
+        'user': this_user,
         'image': cCard.images.first() ,
         'card': cCard,
         'comments': cCard.comments.all(),
@@ -345,6 +350,7 @@ def logged_user(request):
 def add_like(request, card_id):
     this_card = Card.objects.get(id=card_id)
     this_card.likes += 1
+    this_card.save()
     if logged_user(request):
         this_card.user_likes.add(get_user(request))
         return redirect(f'/view_card/{this_card.id}')
