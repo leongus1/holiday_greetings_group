@@ -7,8 +7,18 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'view.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+
 </head>
 <body>
+    {% for message in messages%}
+    
+    <div class="alert alert-success alert-dismissible" style="background-color: rgb(202, 238, 202); margin: 0px; padding: 15px 20px 10px; display: flex; justify-content: space-between;" >        
+        <span id="flash-msg"><strong>Thank you!</strong> Your holiday greeting has been sent!</span>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" style="text-decoration: none; font-size: 30px; color: darkgreen; font-weight: bolder;">&times;</a>
+    </div>
+    {%endfor%}
+    
     {%if visitor%}
     <h2 style="font-size: 30px; text-align: center;">{{ card.creator.first_name }} {{ card.creator.last_name }} wishes you HAPPY HOLIDAYS!</h2>
     {%else%}
@@ -29,6 +39,7 @@
     <audio autoplay>
         <source  src="https://res.cloudinary.com/dnwhdkhgg/video/upload/v{{card.audio.aud.version}}/{{card.audio.aud.public_id}}.{{card.audio.aud.format}}" type="audio/mpeg"  >
     </audio>
+    
     <div id="img-msg" style="display: flex; justify-content: center; margin-top: 20px;">
         <img src="https://res.cloudinary.com/dnwhdkhgg/image/upload/v{{image.img.version}}/{{image.img.public_id}}.{{image.img.format}} " alt="{{card.name}}" id="img-preview"/>
         <div class="greeting">
@@ -81,6 +92,8 @@
         
         
     </div>
-    
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>

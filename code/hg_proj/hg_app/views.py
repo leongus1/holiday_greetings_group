@@ -70,7 +70,7 @@ def create(request):
     context={
         'songs': Audio.objects.all(),
     }
-    return render(request, 'create.html')
+    return render(request, 'create.html', context)
 
 def granted(request, item_id):
     wish_granted = Card.objects.get(id=item_id)
@@ -285,7 +285,7 @@ def send_email(request, card_id):
         email_from = settings.EMAIL_HOST_USER 
         recipient_list = [request.POST['email']]
         send_mail(subject, message, email_from, recipient_list ) 
-        
+        messages.success(request, "Your holiday greeting has been sent!")
         return redirect (f'/view_card/{this_card.id}')
     return redirect ('/')
 
