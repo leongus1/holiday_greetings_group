@@ -94,17 +94,19 @@ def search(request):
         print(f"search text: {stext}")
 
         # add check for no text or only whitespace, if so, return to page
- 
+        user = get_user(request)
         # search the DB using filter
-        qs = Image.objects.filter(name__icontains=stext)
-        print(f"query set: {qs}")
+        cards = Image.objects.filter(Q(uploaded_by=None, name__icontains=stext )| Q(uploaded_by=user, name__icontains=stext))
+        print(f"query set: {cards}")
         # print(f"1st image name: {qs[0].name}")
 
         # return the query set, for now
-        context={
-            'image_objs': qs
+        # this_user = get_user(request)
+        context ={
+            'page_name': f" {stext} Cards",
+            'cards': cards,
         }
-        return render(request, 'search.html', context)
+        return render(request, 'base_card.html', context)
 
     # not a POST request,  send em back home
     return redirect('/')

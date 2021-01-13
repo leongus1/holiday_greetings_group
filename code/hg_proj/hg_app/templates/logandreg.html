@@ -6,7 +6,6 @@
     <title>Log and Reg</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'log_regstyle.css' %}">
-    <script src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
     <div class="top">
@@ -46,7 +45,10 @@
             </form>
         </div>
     </div>
-    <embed src="{% static 'jingle.mp3' %}" width="180" height="90" loop="false" autostart="false" hidden="true" />
-    <script src="{% static 'js/script.js' %}"></script>
+    <audio class="bgMusic" style="float: right;" autoplay>
+        <source src="{% static 'jingle.mp3' %}" type="audio/mpeg">
+    </audio>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 </html>

@@ -16,8 +16,8 @@
     </div>
     <div class="content">
         <p>
-    <audio id="bgMusic" style="float: right;">
-        <source src="{% static 'wish.mp3' %}" type="audio/mpeg" >
+    <audio class="bgMusic" style="float: right;" autoplay>
+        <source src="{% static 'wish.mp3' %}" type="audio/mpeg">
     </audio>
 <!-- 
     <div style="width: 550px; border: 3px dotted white; margin-left: 450px; align-content: center; background: rgba(0, 0, 0.5, 0.5);">
@@ -39,7 +39,8 @@
             <li><i class="fab fa-youtube" style="margin-left: 12px;"></i></li>
         </ul>
     </div>
-    <embed src="{% static 'wish.mp3' %}" width="180" height="90" loop="false" autostart="false" hidden="true" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

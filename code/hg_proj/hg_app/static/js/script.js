@@ -1,17 +1,20 @@
 $(document).ready(function () {
 
-  $("#12345").click(function () {
+  $(".email-alert").click(function () {
     $(this).hide("slow");
   });
 
+  setTimeout(function () {
+    $('.email-alert').hide('slow');
+  }, 5000
+  );
   
-var audio = document.getElementsByClassName("bgMusic")[0];
-audio.volume = 0.1;
-audio.autoplay = true;
+  var audio = $(".bgMusic");
+  for (let i = 0; i < audio.length; i++){
+    audio[i].volume = 0.1;
+  }
 
-
-  
-
+// audio.autoplay = true;
 });
 
 

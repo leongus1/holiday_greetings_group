@@ -19,7 +19,7 @@
         </form>
         <a href="/logout" style="font-size: 20px; color: red; margin-left: 20px;">Logout</a>
     </div>
-    <audio id="bgMusic" style="float: right;">
+    <audio class="bgMusic" style="float: right;" autoplay>
         <source src="{% static 'rudolph.mp3' %}" type="audio/mpeg">
     </audio>
     <div id="links" style="display: flex; justify-content: space-between; margin-left: 600px; margin-right: 50px; ">
@@ -55,7 +55,8 @@
             <li><i class="fab fa-youtube" style="margin-left: 12px;"></i></li>
         </ul>
     </div>
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>

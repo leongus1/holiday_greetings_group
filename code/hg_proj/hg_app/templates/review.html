@@ -11,15 +11,6 @@
 
 </head>
 <body>
-    {% for message in messages%}
-    
-    <div class="alert alert-success alert-dismissible" style="background-color: rgb(202, 238, 202); margin: 0px; padding: 15px 20px 10px; display: flex; justify-content: space-between;" id="12345">        
-        <span id="flash-msg"><strong>Thank you!</strong> Your holiday greeting has been sent!</span>
-        <a href="#" class="close" data-dismiss="alert" aria-label="close" style="text-decoration: none; font-size: 30px; color: darkgreen; font-weight: bolder;">&times;</a>
-    </div>
-    {%endfor%}
-    
-    
     {%if visitor%}
     <h2 style="font-size: 30px; text-align: center;">{{ card.creator.first_name }} {{ card.creator.last_name }} wishes you HAPPY HOLIDAYS!</h2>
     {%else%}
@@ -28,7 +19,14 @@
         <a href="/cards/mycards"><h3 style="color: black; font-size: 25px; ">Back to My Cards</h3></a>
         
     </div>
-    
+    <!-- flash message to indicate email was sent -->
+    {% for message in messages%}
+    <div class="email-alert" style="background-color: rgb(202, 238, 202); margin: 0px; padding: 15px 20px 10px; display: flex; justify-content: space-between;">        
+        <span id="flash-msg"><strong>Thank you!</strong> Your holiday greeting has been sent!</span>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close" style="text-decoration: none; font-size: 30px; color: darkgreen; font-weight: bolder;">&times;</a>
+    </div>
+    {%endfor%}
+
     <h1 style="text-align: center;">Please review your holiday greeting</h1>
     {%if card.viewed%}
     <i style="color: green; text-align: right;"><h4><i class="material-icons">check_circle</i>This card was viewed! </h4></i>
